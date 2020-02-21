@@ -1,0 +1,27 @@
+<h2>Lista Eventi</h2>
+<table class="table">
+    <tr>
+        <th>Id</th>
+        <th>Nome</th>
+        <th>Località</th>
+        <th>Data</th>
+    </tr>
+    @foreach(var evento in ListaElementi)
+    {
+    <tr>
+        <td>@evento.Id</td>
+        <td>@evento.Nome</td>
+        <td>@evento.Localita</td>
+        <td>@evento.Data</td>
+    </tr>
+    }
+</table>
+
+@code {
+    public List<ElementoListaEventi> ListaElementi { get; set; }
+        = new List<ElementoListaEventi>
+            {
+                new ElementoListaEventi() { Id = 1, Nome="DevDay Benevento - Blazor", Localita="Benvento", Data = new DateTime(2020, 2,8)},
+                new ElementoListaEventi() { Id = 2, Nome="DotNetSide Bari - Blazor", Localita="Bari", Data = new DateTime(2020, 2, 21)}
+            };
+}
