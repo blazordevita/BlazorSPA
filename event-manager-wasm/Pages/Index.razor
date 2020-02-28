@@ -3,34 +3,3 @@
 <h1>Event Manager</h1>
 <p>Benvenuti nella Single Page Application scritta in Blazor per la gestione degli eventi.</p>
 <p>Selezionare dal menu laterale l'opzione desiderata.</p>
-
-<ListaEventi ListaElementi="ListaEventi" OnElimina="EliminaEvento" />
-
-<ListaEventi Titolo="Eventi Passati" ListaElementi="ListaEventiPassati" OnElimina="EliminaEventoPassato" />
-
-@code {
-
-    List<ElementoListaEventi> ListaEventiPassati { get; set; } 
-        = new List<ElementoListaEventi>
-            {
-                new ElementoListaEventi() { Id = 1, Nome="DevDay Benevento - Blazor", Localita="Benvento", Data = new DateTime(2020, 2,8)},
-                new ElementoListaEventi() { Id = 2, Nome="DotNetSide Bari - Blazor", Localita="Bari", Data = new DateTime(2020, 2, 21)}
-            };
-
-    List<ElementoListaEventi> ListaEventi { get; set; } 
-        = new List<ElementoListaEventi>
-            {
-                new ElementoListaEventi() { Id = 3, Nome="Mercoledi del Palazzo - Blazor", Localita="Salerno", Data = new DateTime(2020, 3, 11)},
-                new ElementoListaEventi() { Id = 4, Nome="Visual Studio Tour - Blazor", Localita="Cagliari", Data = new DateTime(2020, 3, 21)}
-            };
-
-    public void EliminaEvento(ElementoListaEventi evento) 
-    {
-        this.ListaEventi.Remove(evento);
-    }
-
-    public void EliminaEventoPassato(ElementoListaEventi evento) 
-    {
-        this.ListaEventiPassati.Remove(evento);
-    }
-}
