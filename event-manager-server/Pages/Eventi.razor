@@ -1,0 +1,18 @@
+@page "/eventi"
+
+<ListaEventi ListaElementi="ListaEventi" OnElimina="EliminaEvento" />
+
+@code {
+
+    List<ElementoListaEventi> ListaEventi { get; set; } 
+        = new List<ElementoListaEventi>
+            {
+                new ElementoListaEventi() { Id = 1, Nome="DevDay Benevento - Blazor", Localita="Benvento", Data = new DateTime(2020, 2,8)},
+                new ElementoListaEventi() { Id = 2, Nome="DotNetSide Bari - Blazor", Localita="Bari", Data = new DateTime(2020, 2, 21)}
+            };
+
+    public void EliminaEvento(ElementoListaEventi evento) 
+    {
+        this.ListaEventi.Remove(evento);
+    }
+}
