@@ -1,4 +1,5 @@
 @page "/eventi"
+@inject EventManagerDbContext context;
 
 @if(EventoCorrente == null)
 {
@@ -18,11 +19,25 @@ else
     public Evento EventoCorrente { get; set; }
 
     List<ElementoListaEventi> ListaEventi { get; set; } 
-        = new List<ElementoListaEventi>
+        = new List<ElementoListaEventi>();
+
+
+    protected override void OnInitialized()
+    {
+        CaricaEventi();
+    }
+
+    private void CaricaEventi()
+    {
+        this.ListaEventi = this.context.Eventi
+            .Select(x => new ElementoListaEventi()
             {
-                new ElementoListaEventi() { Id = 1, Nome="DevDay Benevento - Blazor", Localita="Benvento", Data = new DateTime(2020, 2,8)},
-                new ElementoListaEventi() { Id = 2, Nome="DotNetSide Bari - Blazor", Localita="Bari", Data = new DateTime(2020, 2, 21)}
-            };
+                Id = x.Id,
+                Nome = x.Nome,
+                Localita = x.Localita,
+                Data = x.Data
+            }).ToList();
+    }
 
     public void CreaEvento()
     {
@@ -31,34 +46,43 @@ else
 
     public void ModificaEvento(ElementoListaEventi evento)
     {
-        this.EventoCorrente = new Evento()
-        {
-            Id = evento.Id,
-            Nome = evento.Nome,
-            Localita = evento.Localita,
-            Data = evento.Data
-        };
+        this.EventoCorrente = this.context.Eventi
+            .Where(x => x.Id == evento.Id)
+            .Select(x => new Evento()
+            {
+                Id = x.Id,
+                Nome = x.Nome,
+                Localita = x.Localita,
+                Data = x.Data,
+                Descrizione = x.Descrizione,
+                Note = x.Note
+            }).SingleOrDefault();
     }
 
     public void SalvaEvento(Evento evento)
     {
         if(evento.Id == 0)
         {
-            this.ListaEventi.Add(new ElementoListaEventi()
+            this.context.Eventi.Add(new DatiEvento()
             {
-                Id = this.ListaEventi.Count() > 0 ? this.ListaEventi.Max(x=> x.Id) + 1 : 1,
                 Nome = evento.Nome,
                 Localita = evento.Localita,
-                Data = evento.Data
+                Data = evento.Data,
+                Descrizione = evento.Descrizione,
+                Note = evento.Note
             });
         }
         else
         {
-            var eventoDaModificare = this.ListaEventi.Single(x => x.Id == evento.Id);
+            var eventoDaModificare = this.context.Eventi.Single(x => x.Id == evento.Id);
             eventoDaModificare.Nome = evento.Nome;
             eventoDaModificare.Localita = evento.Localita;
             eventoDaModificare.Data = evento.Data;
+            eventoDaModificare.Descrizione = evento.Descrizione;
+            eventoDaModificare.Note = evento.Note;
         }
+        this.context.SaveChanges();
+        this.CaricaEventi();
         this.EventoCorrente = null;
     }
 
@@ -69,6 +93,9 @@ else
 
     public void EliminaEvento(ElementoListaEventi evento) 
     {
-        this.ListaEventi.Remove(evento);
+        var eventoDaEliminare = this.context.Eventi.Single(x => x.Id == evento.Id);
+        this.context.Eventi.Remove(eventoDaEliminare);
+        this.context.SaveChanges();
+        this.CaricaEventi();
     }
 }
