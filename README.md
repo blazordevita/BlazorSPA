@@ -8,5 +8,6 @@ Ogni branch si riferisce all'articolo corrispondente:
 - [04-pagine-navigazione](https://blazordev.it/blazor/spa/2020/02/28/spa-pagine-navigazione.html)
 - [05-gestione-form](https://blazordev.it/blazor/spa/2020/03/03/spa-gestione-form.html)
 - [06-integrazione-backend](https://blazordev.it/blazor/spa/2020/03/06/spa-integrazione-backend.html)
+- [07-integrazione-backend-wasm](https://blazordev.it/blazor/spa/2020/03/10/spa-integrazione-backend-wasm.html)
 
 Maggiori info sul [sito ufficiale](https://blazordev.it).
