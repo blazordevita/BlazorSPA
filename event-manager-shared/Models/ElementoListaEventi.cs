@@ -1,6 +1,6 @@
 using System;
 
-namespace event_manager_wasm.Models
+namespace event_manager_shared.Models
 {
     public class ElementoListaEventi
     {

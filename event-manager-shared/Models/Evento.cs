@@ -1,7 +1,7 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace event_manager_wasm.Models
+namespace event_manager_shared.Models
 {
     public class Evento
     {
