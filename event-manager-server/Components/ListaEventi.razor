@@ -1,3 +1,4 @@
+@inject IJSRuntime JSRuntime;
 <h2>@Titolo</h2>
 <button class="btn btn-primary mb-4" @onclick="OnCrea">Crea Evento</button>
 <table class="table">
@@ -17,11 +18,17 @@
         <td>@evento.Data</td>
         <th>
             <button class="btn btn-warning" @onclick="e => OnModifica.InvokeAsync(evento)">Modifica</button>
-            <button class="btn btn-danger" @onclick="e => OnElimina.InvokeAsync(evento)">Elimina</button>
+            <button class="btn btn-danger" @onclick="e => MostraConferma(evento)">Elimina</button>
         </th>
     </tr>
     }
 </table>
+
+<Conferma
+    IdConferma="eliminaEvento"
+    Titolo="Elimina Evento"
+    Messaggio="@("Eliminare l'evento " + @elementoDaEliminare?.Nome + "?")"
+    OnSi="ConfermaEliminazione" />
 
 @code {
 
@@ -39,4 +46,18 @@
     
     [Parameter]
     public EventCallback<ElementoListaEventi> OnElimina { get; set; }
+
+    private ElementoListaEventi elementoDaEliminare;
+    
+    private async Task MostraConferma(ElementoListaEventi elemento)
+    {
+        this.elementoDaEliminare = elemento;
+        await JSRuntime.InvokeAsync<bool>("mostraConferma", "eliminaEvento");
+    }
+    
+    private async Task ConfermaEliminazione()
+    {
+        await OnElimina.InvokeAsync(this.elementoDaEliminare);
+        await JSRuntime.InvokeAsync<bool>("nascondiConferma", "eliminaEvento");
+    }
 }
