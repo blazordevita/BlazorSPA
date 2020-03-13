@@ -19,6 +19,19 @@
         <a class="dismiss">🗙</a>
     </div>
     <script src="_framework/blazor.webassembly.js"></script>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script>
+        window.mostraConferma = (id) => {
+            $('#' + id).modal('show');
+            return true;
+        };
+        window.nascondiConferma = (id) => {
+            $('#' + id).modal('hide');
+            return true;
+        };
+    </script>
 </body>
 
 </html>
