@@ -10,5 +10,6 @@ Ogni branch si riferisce all'articolo corrispondente:
 - [06-integrazione-backend](https://blazordev.it/blazor/spa/2020/03/06/spa-integrazione-backend.html)
 - [07-integrazione-backend-wasm](https://blazordev.it/blazor/spa/2020/03/10/spa-integrazione-backend-wasm.html)
 - [08-interoperabilita-javascript](https://blazordev.it/blazor/advanced/2020/03/13/interoperabilita-javascript.html)
-- [09-javascript-dotnet](https://blazordev.it/blazor/advanced/2020/03/23/chiamare-dotnet-da-javascript.html)
+- [09-javascript-dotnet](https://blazordev.it/blazor/advanced/2020/03/13/chiamare-dotnet-da-javascript.html)
+
 Maggiori info sul [sito ufficiale](https://blazordev.it).
