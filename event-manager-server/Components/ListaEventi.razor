@@ -1,5 +1,6 @@
 <h2>@Titolo</h2>
-<table class="table">
+<table class="table table-hover">
+    <thead>
     <tr>
         <th>Id</th>
         <th>Nome</th>
@@ -7,6 +8,8 @@
         <th>Data</th>
         <th></th>
     </tr>
+    </thead>
+    <tbody>
     @foreach(var evento in ListaElementi)
     {
     <tr>
@@ -14,9 +17,10 @@
         <td>@evento.Nome</td>
         <td>@evento.Localita</td>
         <td>@evento.Data</td>
-        <th><button class="btn btn-danger" @onclick="e => OnElimina.InvokeAsync(evento)">Elimina</button></th>
+        <td><button class="btn btn-danger" @onclick="e => OnElimina.InvokeAsync(evento)">Elimina</button></td>
     </tr>
     }
+    </tbody>
 </table>
 
 @code {
