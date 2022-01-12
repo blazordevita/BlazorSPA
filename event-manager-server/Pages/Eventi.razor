@@ -1,8 +1,21 @@
 @page "/eventi"
 
-<ListaEventi ListaElementi="ListaEventi" OnElimina="EliminaEvento" />
+@if(EventoCorrente == null)
+{
+    <ListaEventi 
+        ListaElementi="ListaEventi" OnElimina="EliminaEvento"
+        OnCrea="CreaEvento" OnModifica="ModificaEvento" />
+}
+else
+{
+    <DettaglioEvento 
+        DettaglioElemento="EventoCorrente"
+        OnSalva="SalvaEvento" OnAnnulla="AnnullaOperazione" />
+}
 
 @code {
+
+    public Evento EventoCorrente { get; set; }
     List<ElementoListaEventi> ListaEventi { get; set; } 
         = new List<ElementoListaEventi>
             {
@@ -13,5 +26,48 @@
     public void EliminaEvento(ElementoListaEventi evento) 
     {
         this.ListaEventi.Remove(evento);
+    }
+
+    public void CreaEvento()
+    {
+        this.EventoCorrente = new Evento();
+    }
+
+    public void ModificaEvento(ElementoListaEventi evento)
+    {
+        this.EventoCorrente = new Evento()
+        {
+            Id = evento.Id,
+            Nome = evento.Nome,
+            Localita = evento.Localita,
+            Data = evento.Data
+        };
+    }
+
+    public void SalvaEvento(Evento evento)
+    {
+        if(evento.Id == 0)
+        {
+            this.ListaEventi.Add(new ElementoListaEventi()
+            {
+                Id = this.ListaEventi.Count() > 0 ? this.ListaEventi.Max(x=> x.Id) + 1 : 1,
+                Nome = evento.Nome,
+                Localita = evento.Localita,
+                Data = evento.Data
+            });
+        }
+        else
+        {
+            var eventoDaModificare = this.ListaEventi.Single(x => x.Id == evento.Id);
+            eventoDaModificare.Nome = evento.Nome;
+            eventoDaModificare.Localita = evento.Localita;
+            eventoDaModificare.Data = evento.Data;
+        }
+        this.EventoCorrente = null;
+    }
+
+    public void AnnullaOperazione()
+    {
+        this.EventoCorrente = null;
     }
 }
