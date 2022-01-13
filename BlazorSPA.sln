@@ -9,7 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "event-manager-wasm", "event
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "event-manager-backend", "event-manager-backend\event-manager-backend.csproj", "{1FA0211F-19F4-4CC9-BEF6-6E5E3AFA980A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "event-manager-shared", "event-manager-shared\event-manager-shared.csproj", "{82F92A8D-79AE-4BC9-8714-03F6304900A6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "event-manager-shared", "event-manager-shared\event-manager-shared.csproj", "{82F92A8D-79AE-4BC9-8714-03F6304900A6}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "event-manager-data", "event-manager-data\event-manager-data.csproj", "{E9F0E14D-4395-4145-883A-07CEDA850972}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -69,6 +71,18 @@ Global
 		{82F92A8D-79AE-4BC9-8714-03F6304900A6}.Release|x64.Build.0 = Release|Any CPU
 		{82F92A8D-79AE-4BC9-8714-03F6304900A6}.Release|x86.ActiveCfg = Release|Any CPU
 		{82F92A8D-79AE-4BC9-8714-03F6304900A6}.Release|x86.Build.0 = Release|Any CPU
+		{E9F0E14D-4395-4145-883A-07CEDA850972}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E9F0E14D-4395-4145-883A-07CEDA850972}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E9F0E14D-4395-4145-883A-07CEDA850972}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{E9F0E14D-4395-4145-883A-07CEDA850972}.Debug|x64.Build.0 = Debug|Any CPU
+		{E9F0E14D-4395-4145-883A-07CEDA850972}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{E9F0E14D-4395-4145-883A-07CEDA850972}.Debug|x86.Build.0 = Debug|Any CPU
+		{E9F0E14D-4395-4145-883A-07CEDA850972}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E9F0E14D-4395-4145-883A-07CEDA850972}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E9F0E14D-4395-4145-883A-07CEDA850972}.Release|x64.ActiveCfg = Release|Any CPU
+		{E9F0E14D-4395-4145-883A-07CEDA850972}.Release|x64.Build.0 = Release|Any CPU
+		{E9F0E14D-4395-4145-883A-07CEDA850972}.Release|x86.ActiveCfg = Release|Any CPU
+		{E9F0E14D-4395-4145-883A-07CEDA850972}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

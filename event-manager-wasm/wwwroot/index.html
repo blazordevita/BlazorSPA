@@ -20,6 +20,17 @@
         <a class="dismiss">🗙</a>
     </div>
     <script src="_framework/blazor.webassembly.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script>
+        var myModal;
+        window.mostraConferma = (id) => {
+            myModal = new bootstrap.Modal(document.getElementById(id));
+            myModal.show();
+        };
+        window.nascondiConferma = () => {
+            myModal.hide();
+        };
+    </script>
 </body>
 
 </html>

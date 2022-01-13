@@ -1,34 +1,56 @@
+@inject IJSRuntime JSRuntime
+
 <h2>@Titolo</h2>
 <button class="btn btn-primary mb-4" @onclick="OnCrea">Crea Evento</button>
 
 <table class="table table-hover">
     <thead>
-    <tr>
-        <th>Id</th>
-        <th>Nome</th>
-        <th>Località</th>
-        <th>Data</th>
-        <th></th>
-    </tr>
+        <tr>
+            <th>Id</th>
+            <th>Nome</th>
+            <th>Località</th>
+            <th>Data</th>
+            <th></th>
+        </tr>
     </thead>
     <tbody>
-    @foreach(var evento in ListaElementi)
-    {
-    <tr>
-        <td>@evento.Id</td>
-        <td>@evento.Nome</td>
-        <td>@evento.Localita</td>
-        <td>@evento.Data</td>
-        <td>
-            <button class="btn btn-warning" @onclick="e => OnModifica.InvokeAsync(evento)">Modifica</button>
-            <button class="btn btn-danger" @onclick="e => OnElimina.InvokeAsync(evento)">Elimina</button>
-        </td>
-    </tr>
-    }
+        @foreach (var evento in ListaElementi)
+        {
+            <tr>
+                <td>@evento.Id</td>
+                <td>@evento.Nome</td>
+                <td>@evento.Localita</td>
+                <td>@evento.Data</td>
+                <td>
+                    <button class="btn btn-warning" @onclick="e => OnModifica.InvokeAsync(evento)">Modifica</button>
+                    <button class="btn btn-danger" @onclick="e => MostraConferma(evento)">Elimina</button>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
 
+<Conferma IdConferma="eliminaEvento"
+          Titolo="Elimina Evento"
+          Messaggio="@("Eliminare l'evento " + @elementoDaEliminare?.Nome + "?")"
+          OnSi="ConfermaEliminazione" />
+
+
 @code {
+
+    private ElementoListaEventi? elementoDaEliminare;
+
+    private async Task MostraConferma(ElementoListaEventi elemento)
+    {
+        this.elementoDaEliminare = elemento;
+        await JSRuntime.InvokeVoidAsync("mostraConferma", "eliminaEvento");
+    }
+
+    private async Task ConfermaEliminazione()
+    {
+        await JSRuntime.InvokeVoidAsync("nascondiConferma");
+        await OnElimina.InvokeAsync(this.elementoDaEliminare);
+    }
 
     [Parameter]
     public string Titolo { get; set; } = "Lista Eventi";
