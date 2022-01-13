@@ -1,29 +1,22 @@
 @page "/eventi"
-@inject EventManagerDbContext context;
+@inject EventManagerDbContext context
 
-@if(EventoCorrente == null)
+@if (EventoCorrente == null)
 {
-    <ListaEventi 
-        ListaElementi="ListaEventi" OnElimina="EliminaEvento"
-        OnCrea="CreaEvento" OnModifica="ModificaEvento" />
-    <MappaEventi 
-        ListaElementi="ListaEventi"
-        OnSeleziona="ModificaEvento" />
+    <ListaEventi ListaElementi="ListaEventi" OnElimina="EliminaEvento"
+             OnCrea="CreaEvento" OnModifica="ModificaEvento" />
 }
 else
 {
-    <DettaglioEvento 
-        DettaglioElemento="EventoCorrente"
-        OnSalva="SalvaEvento" OnAnnulla="AnnullaOperazione" />
+    <DettaglioEvento DettaglioElemento="EventoCorrente"
+                 OnSalva="SalvaEvento" OnAnnulla="AnnullaOperazione" />
 }
 
 @code {
 
-    public Evento EventoCorrente { get; set; }
-
-    List<ElementoListaEventi> ListaEventi { get; set; } 
+    public Evento? EventoCorrente { get; set; }
+    List<ElementoListaEventi> ListaEventi { get; set; }
         = new List<ElementoListaEventi>();
-
 
     protected override void OnInitialized()
     {
@@ -34,12 +27,20 @@ else
     {
         this.ListaEventi = this.context.Eventi
             .Select(x => new ElementoListaEventi()
-            {
-                Id = x.Id,
-                Nome = x.Nome,
-                Localita = x.Localita,
-                Data = x.Data
-            }).ToList();
+                {
+                    Id = x.Id,
+                    Nome = x.Nome,
+                    Localita = x.Localita,
+                    Data = x.Data
+                }).ToList();
+    }
+
+    public void EliminaEvento(ElementoListaEventi evento)
+    {
+        var eventoDaEliminare = this.context.Eventi.Single(x => x.Id == evento.Id);
+        this.context.Eventi.Remove(eventoDaEliminare);
+        this.context.SaveChanges();
+        this.CaricaEventi();
     }
 
     public void CreaEvento()
@@ -50,8 +51,8 @@ else
     public void ModificaEvento(ElementoListaEventi evento)
     {
         this.EventoCorrente = this.context.Eventi
-            .Where(x => x.Id == evento.Id)
-            .Select(x => new Evento()
+        .Where(x => x.Id == evento.Id)
+        .Select(x => new Evento()
             {
                 Id = x.Id,
                 Nome = x.Nome,
@@ -64,16 +65,16 @@ else
 
     public void SalvaEvento(Evento evento)
     {
-        if(evento.Id == 0)
+        if (evento.Id == 0)
         {
             this.context.Eventi.Add(new DatiEvento()
-            {
-                Nome = evento.Nome,
-                Localita = evento.Localita,
-                Data = evento.Data,
-                Descrizione = evento.Descrizione,
-                Note = evento.Note
-            });
+                {
+                    Nome = evento.Nome,
+                    Localita = evento.Localita,
+                    Data = evento.Data,
+                    Descrizione = evento.Descrizione,
+                    Note = evento.Note
+                });
         }
         else
         {
@@ -92,13 +93,5 @@ else
     public void AnnullaOperazione()
     {
         this.EventoCorrente = null;
-    }
-
-    public void EliminaEvento(ElementoListaEventi evento) 
-    {
-        var eventoDaEliminare = this.context.Eventi.Single(x => x.Id == evento.Id);
-        this.context.Eventi.Remove(eventoDaEliminare);
-        this.context.SaveChanges();
-        this.CaricaEventi();
     }
 }

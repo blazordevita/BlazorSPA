@@ -1,14 +1,11 @@
-﻿@inject HttpClient Http;
 @page "/eventi"
+@inject HttpClient Http
 
 @if(EventoCorrente == null)
 {
     <ListaEventi 
         ListaElementi="ListaEventi" OnElimina="EliminaEvento"
         OnCrea="CreaEvento" OnModifica="ModificaEvento" />
-    <MappaEventi 
-        ListaElementi="ListaEventi"
-        OnSeleziona="ModificaEvento" />
 }
 else
 {
@@ -18,12 +15,12 @@ else
 }
 
 @code {
-
     private string apiUrl = @"http://localhost:5002/api/eventi";
-    public Evento EventoCorrente { get; set; }
+    public Evento? EventoCorrente { get; set; }
+
     List<ElementoListaEventi> ListaEventi { get; set; } 
         = new List<ElementoListaEventi>();
-    
+
     protected override Task OnInitializedAsync()
     {
         return caricaEventi();
@@ -32,42 +29,44 @@ else
     private async Task caricaEventi()
     {
         ListaEventi = await Http
-            .GetJsonAsync<List<ElementoListaEventi>>(apiUrl);
+            .GetFromJsonAsync<List<ElementoListaEventi>>(apiUrl);
     }
 
     public void CreaEvento()
-    {
-        this.EventoCorrente = new Evento();
-    }
+{
+    this.EventoCorrente = new Evento();
+}
 
-    public async Task ModificaEvento(ElementoListaEventi evento)
-    {
-        this.EventoCorrente = await Http
-            .GetJsonAsync<Evento>($"{apiUrl}/{evento.Id}");
-    }
+public async Task ModificaEvento(ElementoListaEventi evento)
+{
+    this.EventoCorrente = await Http
+        .GetFromJsonAsync<Evento>($"{apiUrl}/{evento.Id}");
+}
 
-    public async Task SalvaEvento(Evento evento)
+public async Task SalvaEvento(Evento evento)
+{
+    if(evento.Id == 0)
     {
-        if(evento.Id == 0)
-        {
-            await Http.PostJsonAsync<Evento>(apiUrl, evento);
-        }
-        else
-        {
-            await Http.PutJsonAsync($"{apiUrl}/{evento.Id}", evento);
-        }
-        await caricaEventi();
-        this.EventoCorrente = null;
+        await Http.PostAsJsonAsync<Evento>(apiUrl, evento);
     }
+    else
+    {
+        await Http.PutAsJsonAsync<Evento>($"{apiUrl}/{evento.Id}", evento);
+    }
+    await caricaEventi();
+    this.EventoCorrente = null;
+}
 
-    public void AnnullaOperazione()
-    {
-        this.EventoCorrente = null;
-    }
+public void AnnullaOperazione()
+{
+    this.EventoCorrente = null;
+}
 
-    public async Task EliminaEvento(ElementoListaEventi evento) 
-    {
-        await Http.DeleteAsync($"{apiUrl}/{evento.Id}");
-        await caricaEventi();
-    }
+public async Task EliminaEvento(ElementoListaEventi evento) 
+{
+    await Http.DeleteAsync($"{apiUrl}/{evento.Id}");
+    await caricaEventi();
+}
+
+
 }

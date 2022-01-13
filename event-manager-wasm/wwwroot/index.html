@@ -1,67 +1,35 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title>Event Manager</title>
     <base href="/" />
     <link href="css/bootstrap/bootstrap.min.css" rel="stylesheet" />
-    <link href="css/site.css" rel="stylesheet" />
+    <link href="css/app.css" rel="stylesheet" />
+    <link href="event-manager-wasm.styles.css" rel="stylesheet" />
 </head>
 
 <body>
-    <app>Loading...</app>
+    <div id="app">Loading...</div>
 
     <div id="blazor-error-ui">
         An unhandled error has occurred.
         <a href="" class="reload">Reload</a>
         <a class="dismiss">🗙</a>
     </div>
-    
     <script src="_framework/blazor.webassembly.js"></script>
-    <script src="js/jquery.min.js"></script>
-    <script src="js/popper.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script>
+        var myModal;
         window.mostraConferma = (id) => {
-            $('#' + id).modal('show');
+            myModal = new bootstrap.Modal(document.getElementById(id));
+            myModal.show();
         };
-        window.nascondiConferma = (id) => {
-            $('#' + id).modal('hide');
+        window.nascondiConferma = () => {
+            myModal.hide();
         };
-        window.mostraMappa = (contenitore, zona, zoom, eventi, componente) => {
-            var geocoder = new google.maps.Geocoder();
-            geocoder.geocode({'address': zona}, function(results, status) {
-                if (status === 'OK') {
-                    var map = new google.maps.Map(contenitore, {
-                        zoom: zoom,
-                        center: results[0].geometry.location
-                    });
-                    eventi.forEach(evento => {
-                        geocoder.geocode({'address': evento.localita}, function(results, status) {
-                            if (status === 'OK') {
-                                var marker = new google.maps.Marker({
-                                    map: map,
-                                    position: results[0].geometry.location
-                                });
-                                marker.addListener('click', function() {
-                                    componente.invokeMethodAsync('SelezionaEvento', evento)
-                                        .then(data => { });
-                                });
-                            } else {
-                                console.log('indirizzo non trovato: ' + status);
-                            }
-                        });
-                    });
-                } else {
-                   console.log('zona non trovata: ' + status);
-                }
-            });
-        }
-    </script>
-    <script async defer
-    src="https://maps.googleapis.com/maps/api/js?key=<API KEY>">
     </script>
 </body>
 
