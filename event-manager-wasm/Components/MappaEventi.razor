@@ -1,0 +1,55 @@
+﻿@inject IJSRuntime JSRuntime
+<div style="width:@Width;height:@Height;" @ref="MapContainerReference"></div>
+
+@code {
+    private ElementReference MapContainerReference;
+
+    private bool firstRender = true;
+
+    protected override async Task OnParametersSetAsync()
+    {
+        if(!firstRender)
+        {
+           await mostraMappa();
+        }
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if(firstRender)
+        {
+            this.firstRender = false;
+            await mostraMappa();
+        }
+    }
+
+    [Parameter]
+    public string Width { get; set; } = "100%";
+
+    [Parameter]
+    public string Height { get; set; } = "400px";
+
+    [Parameter]
+    public List<ElementoListaEventi> ListaElementi { get; set; }
+
+    [Parameter]
+    public EventCallback<ElementoListaEventi> OnSeleziona { get; set; }
+
+    private async Task mostraMappa()
+    {
+        await JSRuntime.InvokeVoidAsync(
+                "mostraMappa", 
+                MapContainerReference, 
+                "Italia", 
+                5, 
+                ListaElementi,
+                DotNetObjectReference.Create(this));
+        StateHasChanged();
+    }
+
+    [JSInvokable]
+    public void SelezionaEvento(ElementoListaEventi evento)
+    {
+        this.OnSeleziona.InvokeAsync(evento);
+    }
+}
