@@ -1,40 +1,42 @@
 <h2>Evento @DettaglioElemento.Nome</h2>
-<EditForm Model="@DettaglioElemento" OnValidSubmit="@(e => OnSalva.InvokeAsync(DettaglioElemento))">
+<EditForm 
+    Model="@DettaglioElemento"
+    OnValidSubmit="@(e => OnSalva.InvokeAsync(DettaglioElemento))">
+    
     <DataAnnotationsValidator />
     <ValidationSummary />
-    
+
+
     <div class="form-group">
         <label for="nome">Nome:</label>
-        <InputText autocomplete="off" id="nome" @bind-Value="DettaglioElemento.Nome" class="form-control" />
+        <InputText id="nome" @bind-Value="DettaglioElemento.Nome" class="form-control" />
         <ValidationMessage For="@(() => DettaglioElemento.Nome)" />
     </div>
 
     <div class="form-group">
         <label for="localita">Località:</label>
-        <InputText autocomplete="off" id="localita" @bind-Value="DettaglioElemento.Localita" class="form-control" />
+        <InputText id="localita" @bind-Value="DettaglioElemento.Localita" class="form-control" />
         <ValidationMessage For="@(() => DettaglioElemento.Localita)" />
     </div>
 
     <div class="form-group">
         <label for="data">Data:</label>
         <InputDate id="data" @bind-Value="DettaglioElemento.Data" class="form-control" />
-        <ValidationMessage For="@(() => DettaglioElemento.Data)" />
     </div>
 
     <div class="form-group">
         <label for="descrizione">Descrizione:</label>
-        <InputText autocomplete="off" id="descrizione" @bind-Value="DettaglioElemento.Descrizione" class="form-control" />
-        <ValidationMessage For="@(() => DettaglioElemento.Descrizione)" />
+        <InputText id="descrizione" @bind-Value="DettaglioElemento.Descrizione" class="form-control" />
     </div>
 
     <div class="form-group">
         <label for="note">Note:</label>
-        <InputTextArea autocomplete="off" id="note" @bind-Value="DettaglioElemento.Note" class="form-control" />
-        <ValidationMessage For="@(() => DettaglioElemento.Note)" />
+        <InputTextArea id="note" @bind-Value="DettaglioElemento.Note" class="form-control" />
     </div>
     
     <button type="submit" class="btn btn-primary">Salva</button>
     <button type="button" class="btn btn-warning" @onclick="OnAnnulla">Annulla</button>
+
 </EditForm>
 
 @code {

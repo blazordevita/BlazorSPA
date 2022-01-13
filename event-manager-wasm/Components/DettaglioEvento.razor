@@ -1,8 +1,12 @@
 <h2>Evento @DettaglioElemento.Nome</h2>
-<EditForm Model="@DettaglioElemento" OnValidSubmit="@(e => OnSalva.InvokeAsync(DettaglioElemento))">
+<EditForm 
+    Model="@DettaglioElemento"
+    OnValidSubmit="@(e => OnSalva.InvokeAsync(DettaglioElemento))">
+    
     <DataAnnotationsValidator />
     <ValidationSummary />
-    
+
+
     <div class="form-group">
         <label for="nome">Nome:</label>
         <InputText id="nome" @bind-Value="DettaglioElemento.Nome" class="form-control" />
@@ -18,23 +22,21 @@
     <div class="form-group">
         <label for="data">Data:</label>
         <InputDate id="data" @bind-Value="DettaglioElemento.Data" class="form-control" />
-        <ValidationMessage For="@(() => DettaglioElemento.Data)" />
     </div>
 
     <div class="form-group">
         <label for="descrizione">Descrizione:</label>
         <InputText id="descrizione" @bind-Value="DettaglioElemento.Descrizione" class="form-control" />
-        <ValidationMessage For="@(() => DettaglioElemento.Descrizione)" />
     </div>
 
     <div class="form-group">
         <label for="note">Note:</label>
         <InputTextArea id="note" @bind-Value="DettaglioElemento.Note" class="form-control" />
-        <ValidationMessage For="@(() => DettaglioElemento.Note)" />
     </div>
     
     <button type="submit" class="btn btn-primary">Salva</button>
     <button type="button" class="btn btn-warning" @onclick="OnAnnulla">Annulla</button>
+
 </EditForm>
 
 @code {

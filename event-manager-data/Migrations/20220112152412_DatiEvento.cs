@@ -1,6 +1,8 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
+#nullable disable
+
 namespace event_manager_data.Migrations
 {
     public partial class DatiEvento : Migration
@@ -11,13 +13,13 @@ namespace event_manager_data.Migrations
                 name: "Eventi",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    Nome = table.Column<string>(nullable: false),
-                    Localita = table.Column<string>(maxLength: 50, nullable: false),
-                    Data = table.Column<DateTime>(nullable: false),
-                    Descrizione = table.Column<string>(nullable: true),
-                    Note = table.Column<string>(nullable: true)
+                    Nome = table.Column<string>(type: "TEXT", nullable: false),
+                    Localita = table.Column<string>(type: "TEXT", maxLength: 50, nullable: false),
+                    Data = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    Descrizione = table.Column<string>(type: "TEXT", nullable: false),
+                    Note = table.Column<string>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {

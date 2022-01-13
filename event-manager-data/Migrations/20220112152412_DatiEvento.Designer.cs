@@ -6,17 +6,18 @@ using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using event_manager_data;
 
+#nullable disable
+
 namespace event_manager_data.Migrations
 {
     [DbContext(typeof(EventManagerDbContext))]
-    [Migration("20200306062727_DatiEvento")]
+    [Migration("20220112152412_DatiEvento")]
     partial class DatiEvento
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
-            modelBuilder
-                .HasAnnotation("ProductVersion", "3.1.2");
+            modelBuilder.HasAnnotation("ProductVersion", "6.0.1");
 
             modelBuilder.Entity("event_manager_data.DatiEvento", b =>
                 {
@@ -28,18 +29,20 @@ namespace event_manager_data.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Descrizione")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Localita")
                         .IsRequired()
-                        .HasColumnType("TEXT")
-                        .HasMaxLength(50);
+                        .HasMaxLength(50)
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Nome")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Note")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");

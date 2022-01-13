@@ -1,21 +1,21 @@
-using System.Linq;
-using event_manager_data;
+﻿using event_manager_data;
+using event_manager_shared;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using event_manager_shared.Models;
 
 namespace event_manager_backend.Controllers
 {
-    [ApiController]
     [Route("api/[controller]")]
+    [ApiController]
     public class EventiController : ControllerBase
     {
         private readonly EventManagerDbContext db;
-    
+
         public EventiController(EventManagerDbContext db)
         {
             this.db = db;
         }
-    
+
         [HttpGet]
         public IActionResult Get()
         {
@@ -27,7 +27,7 @@ namespace event_manager_backend.Controllers
                 Data = x.Data
             }).ToList());
         }
-    
+
         [HttpGet("{id}")]
         public IActionResult Get(int id)
         {
@@ -42,15 +42,15 @@ namespace event_manager_backend.Controllers
                     Descrizione = x.Descrizione,
                     Note = x.Note
                 }).SingleOrDefault();
-    
-            if(result == null) return NotFound();
+
+            if (result == null) return NotFound();
             return Ok(result);
         }
-    
+
         [HttpPost]
         public IActionResult Post(Evento item)
         {
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 var entity = new DatiEvento()
                 {
@@ -68,14 +68,14 @@ namespace event_manager_backend.Controllers
             }
             return BadRequest(ModelState);
         }
-    
+
         [HttpPut("{id}")]
         public IActionResult Put(int id, Evento item)
         {
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 var entity = this.db.Eventi.SingleOrDefault(x => x.Id == id);
-                if(entity == null) return NotFound();
+                if (entity == null) return NotFound();
                 entity.Nome = item.Nome;
                 entity.Localita = item.Localita;
                 entity.Data = item.Data;
@@ -86,12 +86,12 @@ namespace event_manager_backend.Controllers
             }
             return BadRequest(ModelState);
         }
-    
+
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
             var entity = this.db.Eventi.SingleOrDefault(x => x.Id == id);
-            if(entity == null) return NotFound();
+            if (entity == null) return NotFound();
             this.db.Remove(entity);
             this.db.SaveChanges();
             return NoContent();
