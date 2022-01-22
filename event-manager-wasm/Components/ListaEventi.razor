@@ -1,4 +1,6 @@
 <h2>@Titolo</h2>
+<button class="btn btn-primary mb-4" @onclick="OnCrea">Crea Evento</button>
+
 <table class="table table-hover">
     <thead>
     <tr>
@@ -17,7 +19,10 @@
         <td>@evento.Nome</td>
         <td>@evento.Localita</td>
         <td>@evento.Data</td>
-        <td><button class="btn btn-danger" @onclick="e => OnElimina.InvokeAsync(evento)">Elimina</button></td>
+        <td>
+            <button class="btn btn-warning" @onclick="e => OnModifica.InvokeAsync(evento)">Modifica</button>
+            <button class="btn btn-danger" @onclick="e => OnElimina.InvokeAsync(evento)">Elimina</button>
+        </td>
     </tr>
     }
     </tbody>
@@ -33,4 +38,10 @@
 
     [Parameter]
     public EventCallback<ElementoListaEventi> OnElimina { get; set; }
+
+    [Parameter]
+    public EventCallback OnCrea { get; set; }
+
+    [Parameter]
+    public EventCallback<ElementoListaEventi> OnModifica { get; set; }
 }
